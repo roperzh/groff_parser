@@ -3,7 +3,6 @@
 ### Status
 [![Gem Version](https://badge.fury.io/rb/groff_parser.png)](http://badge.fury.io/rb/groff_parser)
 [![Code Climate](https://codeclimate.com/github/roperzh/groff_parser.png)](https://codeclimate.com/github/roperzh/groff_parser)
-[![Dependencies](https://gemnasium.com/roperzh/groff_parser.png)](https://gemnasium.com/roperzh/groff_parser)
 
 Tiny library to parse groff files, with some handy metods to manage directories with a lot of files
 
