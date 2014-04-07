@@ -23,7 +23,7 @@ Or install it yourself as:
 
 ## Basic Usage
 
-Coming soon, in the meantime you can read the [`docs`](http://rubydoc.info/gems/)
+Coming soon, in the meantime you can read the [`docs`](http://rubydoc.info/gems/groff_parser)
 
 
 ## Contributing
