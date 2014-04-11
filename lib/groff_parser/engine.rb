@@ -104,7 +104,7 @@ module GroffParser
       search_path = zipped ? "#{path}/*.gz" : "#{path}/*"
 
       Dir.glob(search_path) do |document|
-        yield parse(document, zipped)
+        yield parse(document, zipped: zipped)
       end
     end
   end
