@@ -44,7 +44,9 @@ module GroffParser
     #   doesn't exist yet
 
     def section(name)
-      raw_content[/SH \"#{name}\"(.*?)SH/im].gsub("SH", "")
+      raw_section = raw_content[/SH (?:\")?#{name}(?:\")?(.*?)SH/im]
+
+      return raw_section.gsub("SH", "").gsub("#{name}", "") if raw_section
     end
 
     # Raw content of the document, without being parsed, in pure

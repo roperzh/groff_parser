@@ -1,4 +1,4 @@
-require "test_helper"
+require File.expand_path(File.join("test/test_helper"))
 
 describe GroffParser::Document do
 
@@ -13,11 +13,11 @@ describe GroffParser::Document do
   describe "#section" do
     it "returns the contents of a section delimited by a given title" do
       zipped_document.section("NAME").must_equal(
-        " \"NAME\"\ngit \\- the stupid content tracker\n."
+        " \"\"\ngit \\- the stupid content tracker\n."
       )
 
       unzipped_document.section("NAME").must_equal(
-        " \"NAME\"\ngit \\- the stupid content tracker\n."
+        " \"\"\ngit \\- the stupid content tracker\n."
       )
     end
 
@@ -25,6 +25,10 @@ describe GroffParser::Document do
       zipped_document.section("NAME").must_equal(
         unzipped_document.section("NAME")
       )
+    end
+
+    it "returns nil if the provided section does not exists" do
+      zipped_document.section("UNEXISTENT_SECTION").must_equal(nil)
     end
   end
 
