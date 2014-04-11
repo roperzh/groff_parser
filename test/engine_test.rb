@@ -40,7 +40,7 @@ describe GroffParser::Engine do
   describe "#parse_all" do
     it "returns an array with all the documents contents present in the path" do
       engine.parse_all.must_equal(
-        [`cat test/fixtures/git.1 | groff -mandoc -Tutf8`]
+        [GroffParser::Document.new("test/fixtures/git.1", zipped: false)]
       )
     end
   end

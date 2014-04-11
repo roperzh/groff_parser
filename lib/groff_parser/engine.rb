@@ -62,14 +62,14 @@ module GroffParser
     #
     # @param zipped [Boolean] indicates if the file is zipped or not (gzip)
     #
-    # @return [Array] an array of all the parsed documents
+    # @return [Array<GroffParser::Document>] an array of all the parsed documents
 
     def parse_all(format: :utf8, zipped: false)
       documents   = []
       search_path = zipped ? "#{path}/*.gz" : "#{path}/*[0-9]"
 
       Dir.glob(search_path) do |document|
-        documents << parse(document, zipped, format: format)
+        documents << parse(document, zipped: zipped)
       end
 
       documents
@@ -96,13 +96,15 @@ module GroffParser
     #   parser = GroffParser::Engine.new("/folder/with/some/files")
     #   parser.apply_all { |document|  document.parse }
     #
+    # @param zipped [Boolean] indicates if the file is zipped or not (gzip)
+    #
     # @return [nil]
 
-    def apply_all(*args)
-      search_path = args[0][:zipped] ? "#{path}/*.gz" : "#{path}/*"
+    def apply_to_all(zipped: false)
+      search_path = zipped ? "#{path}/*.gz" : "#{path}/*"
 
       Dir.glob(search_path) do |document|
-        yield parse(*args)
+        yield parse(document, zipped)
       end
     end
   end
