@@ -82,9 +82,8 @@ module GroffParser
     # @example
     #  parser = GroffParser::Engine.new("/path/to/file")
     #  parser.apply { |document| document.parse }
-    #
 
-    def apply(*args)
+    def apply_to(*args)
       yield parse(args.join(" "))
     end
 
