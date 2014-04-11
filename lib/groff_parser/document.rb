@@ -4,6 +4,8 @@ module GroffParser
 
   class Document
 
+    attr_accessor :path
+
     # Initializes the document class
     #
     # @since 0.1.0
