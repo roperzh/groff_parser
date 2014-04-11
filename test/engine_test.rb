@@ -5,11 +5,36 @@ describe GroffParser::Engine do
   let(:engine) { GroffParser::Engine.new(path: "test/fixtures") }
 
   describe "#parse" do
-    it "returns the contents of a document, formatted by the requested format" do
-      engine.parse("git.1.gz", true, format: :utf8).must_equal(
-        `cat test/fixtures/git.1 | groff -mandoc -Tutf8`
-      )
+    context "given a zipped document" do
+      it "returns a new GroffParser::Document instance" do
+        engine.parse("git.1.gz", zipped: true).class.must_equal(
+          GroffParser::Document
+        )
+      end
+
+      it "allows to retrieve information of the parsed file" do
+        engine.parse("git.1.gz", zipped: true).raw_content.must_equal(
+          GroffParser::Document.new("test/fixtures/git.1.gz", zipped: true)
+            .raw_content
+        )
+      end
     end
+
+    context "given an unzipped document" do
+      it "returns a new GroffParser::Document instance" do
+        engine.parse("git.1").class.must_equal(
+          GroffParser::Document
+        )
+      end
+
+      it "allows to retrieve information of the parsed file" do
+        engine.parse("git.1").raw_content.must_equal(
+          GroffParser::Document.new("test/fixtures/git.1.gz", zipped: true)
+            .raw_content
+        )
+      end
+    end
+
   end
 
   describe "#parse_all" do

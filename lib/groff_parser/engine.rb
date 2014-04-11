@@ -44,15 +44,12 @@ module GroffParser
     #
     # @param zipped [Boolean] indicates if the file is zipped or not (gzip)
     #
-    # @param format [Symbol, String] indicates the output format, could be:
-    #   dvi, html, lbp, lj4, ps, ascii, cp1047, latin1, utf8, X75, X75, X100, X100
-    #
-    # @return [String] the content of the document, parsed in the proper format
+    # @return [GroffParser::Document] the document, parsed and ready to be manipulated
 
-    def parse(document_path, zipped, format: :utf8)
+    def parse(document_path, zipped: zipped)
       dpath = document_path.include?(path) ? document_path : "#{path}/#{document_path}"
 
-      Document.new(dpath, zipped: zipped).formatted_content(format)
+      Document.new(dpath, zipped: zipped)
     end
 
     # Parse all documents in a given directory, with a given format
