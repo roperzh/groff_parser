@@ -49,6 +49,24 @@ module GroffParser
       return raw_section.gsub("SH", "").gsub("#{name}", "") if raw_section
     end
 
+    # Executes the groff command, with a given set of flags, and returns the
+    # output
+    #
+    # @since 0.4.0
+    #
+    # @example
+    #   document.groff(m: :mandoc)
+    #   # will execute: `groff -m mandoc
+    #
+    # @param flags [Hash] hash containing flags in key-value format
+    #
+    # @return [String] the result of the command
+
+
+    def groff(flags = {})
+      `#{get} #{@path} | groff #{formatted_flags(flags)}`
+    end
+
     # Raw content of the document, without being parsed, in pure
     # groff format
     #
@@ -97,6 +115,24 @@ module GroffParser
 
     def get
       @zipped ? "zcat" : "cat"
+    end
+
+    # Helper to reduce a hash containing flags to a single line string
+    # according to the usual GNU convention
+    #
+    # @since 0.4.0
+    #
+    # @example
+    #   formatted_flags(m: :mandoc) # => "-mmandoc"
+    #
+    # @params flags [Hash] flags to be reduced
+    #
+    # @return [String] string with the parsed flags following the usual GNU convention
+
+    def formatted_flags(flags)
+      flags.reduce("") {
+        |result, flag| result.concat(" -#{flag[0]}#{flag[1]}")
+      }
     end
   end
 end
