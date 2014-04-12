@@ -64,7 +64,7 @@ module GroffParser
     #
     # @return [Array<GroffParser::Document>] an array of all the parsed documents
 
-    def parse_all(zipped = nil, format: :utf8)
+    def parse_all(zipped = nil)
       documents   = []
       search_path = zipped ? "#{path}/*.gz" : "#{path}/*[0-9]"
 
