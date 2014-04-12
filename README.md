@@ -9,22 +9,21 @@ Tiny library to parse groff files, with some handy metods to manage directories 
 
 ## Installation
 
-Add this line to your application's Gemfile:
+This gem relies on the [`groff`](http://savannah.gnu.org/projects/groff) GNU package, so in order to work you will need to install it.
 
-    gem 'groff_parser'
+```bash
+apt-get install groff
+```
 
-And then execute:
+If you already have the `groff` package, just install the gem as usual:
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install groff_parser
+```bash
+  $ gem install groff_parser
+```
 
 ## Basic Usage
 
-Coming soon, in the meantime you can read the [`docs`](http://rubydoc.info/gems/groff_parser)
-
+For a detailed information about how the gem works internally, you can take a look at the [`docs`](http://rubydoc.info/gems/groff_parser)
 
 ## Contributing
 
