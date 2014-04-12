@@ -3,11 +3,11 @@ require File.expand_path(File.join("test/test_helper"))
 describe GroffParser::Document do
 
   let(:zipped_document)   {
-    GroffParser::Document.new("test/fixtures/git.1.gz", zipped: true)
+    GroffParser::Document.new("test/fixtures/git.1.gz", :zipped)
   }
 
   let(:unzipped_document) {
-    GroffParser::Document.new("test/fixtures/git.1", zipped: false)
+    GroffParser::Document.new("test/fixtures/git.1")
   }
 
   describe "#section" do

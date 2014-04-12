@@ -11,16 +11,16 @@ module GroffParser
     # @since 0.1.0
     #
     # @example
-    #   zipped_document = GroffParser::Document.new("path/to/file.gz", zipped: true)
-    #   unzipped_document = GroffParser::Document.new("path/to/file.1",  zipped: false)
+    #   zipped_document = GroffParser::Document.new("path/to/file.gz", :zipped)
+    #   unzipped_document = GroffParser::Document.new("path/to/file.1")
     #
     # @param path [String] the path where the document is located
     #
-    # @param zipped [Boolean] indicates if the document is zipped or not
+    # @param zipped [Symbol, Boolean, String] indicates if the document is zipped or not
     #
     # @return [GroffParser::Document] a new instance of a Document class
 
-    def initialize(path, zipped: false)
+    def initialize(path, zipped = nil)
       @path   = path
       @zipped = zipped
     end

@@ -2,19 +2,19 @@ require File.expand_path(File.join("test/test_helper"))
 
 describe GroffParser::Engine do
 
-  let(:engine) { GroffParser::Engine.new(path: "test/fixtures") }
+  let(:engine) { GroffParser::Engine.new("test/fixtures") }
 
   describe "#parse" do
     context "given a zipped document" do
       it "returns a new GroffParser::Document instance" do
-        engine.parse("git.1.gz", zipped: true).class.must_equal(
+        engine.parse("git.1.gz", :zipped).class.must_equal(
           GroffParser::Document
         )
       end
 
       it "allows to retrieve information of the parsed file" do
-        engine.parse("git.1.gz", zipped: true).raw_content.must_equal(
-          GroffParser::Document.new("test/fixtures/git.1.gz", zipped: true)
+        engine.parse("git.1.gz", :zipped).raw_content.must_equal(
+          GroffParser::Document.new("test/fixtures/git.1.gz", :zipped)
             .raw_content
         )
       end
@@ -29,7 +29,7 @@ describe GroffParser::Engine do
 
       it "allows to retrieve information of the parsed file" do
         engine.parse("git.1").raw_content.must_equal(
-          GroffParser::Document.new("test/fixtures/git.1.gz", zipped: true)
+          GroffParser::Document.new("test/fixtures/git.1.gz", :zipped)
             .raw_content
         )
       end
@@ -40,7 +40,7 @@ describe GroffParser::Engine do
   describe "#parse_all" do
     it "returns an array with all the documents contents present in the path" do
       engine.parse_all.must_equal(
-        [GroffParser::Document.new("test/fixtures/git.1", zipped: false)]
+        [GroffParser::Document.new("test/fixtures/git.1")]
       )
     end
   end
