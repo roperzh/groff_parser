@@ -10,6 +10,8 @@ describe GroffParser::Document do
     GroffParser::Document.new("test/fixtures/git.1")
   }
 
+  let(:timestamp) { Regexp.new(/\<\!\-\- CreationDate\: (.*?) \-\-\>/) }
+
   describe "#section" do
     it "returns the contents of a section delimited by a given title" do
       zipped_document.section("NAME").must_equal(
@@ -49,7 +51,6 @@ describe GroffParser::Document do
   end
 
   describe "#formatted_content" do
-    let(:timestamp) { Regexp.new(/\<\!\-\- CreationDate\: (.*?) \-\-\>/) }
 
     it "returns the content in the requested format" do
       # Due to a small delay parsing data, we need to supress the timestamps
@@ -90,12 +91,12 @@ describe GroffParser::Document do
 
     context "without flags" do
       it "executes groff command without any aditional options" do
-        zipped_document.groff.must_equal(
-          `zcat test/fixtures/git.1.gz | groff`
+        zipped_document.groff.gsub(timestamp, "").must_equal(
+          `zcat test/fixtures/git.1.gz | groff`.gsub(timestamp, "")
         )
 
-        zipped_document.groff.must_equal(
-          `cat test/fixtures/git.1 | groff`
+        zipped_document.groff.gsub(timestamp, "").must_equal(
+          `cat test/fixtures/git.1 | groff`.gsub(timestamp, "")
         )
       end
     end
