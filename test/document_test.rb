@@ -74,4 +74,30 @@ describe GroffParser::Document do
       )
     end
   end
+
+  describe "#groff" do
+    context "given a set of flags" do
+      it "executes the groff command with the flags provided" do
+        zipped_document.groff(:T => :utf8, :m => :mandoc).must_equal(
+          `zcat test/fixtures/git.1.gz | groff -Tutf8 -mmandoc`
+        )
+
+        zipped_document.groff(:T => :utf8, :m => :mandoc).must_equal(
+          `cat test/fixtures/git.1 | groff -Tutf8 -mmandoc`
+        )
+      end
+    end
+
+    context "without flags" do
+      it "executes groff command without any aditional options" do
+        zipped_document.groff.must_equal(
+          `zcat test/fixtures/git.1.gz | groff`
+        )
+
+        zipped_document.groff.must_equal(
+          `cat test/fixtures/git.1 | groff`
+        )
+      end
+    end
+  end
 end

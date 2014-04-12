@@ -49,6 +49,24 @@ module GroffParser
       return raw_section.gsub("SH", "").gsub("#{name}", "") if raw_section
     end
 
+    # Executes the groff command, with a given set of flags, and returns the
+    # output
+    #
+    # @since 0.4.0
+    #
+    # @example
+    #   document.groff(m: :mandoc)
+    #   # will execute: `groff -m mandoc
+    #
+    # @param flags [Hash] hash containing flags in key-value format
+    #
+    # @return [String] the result of the command
+
+
+    def groff(flags = {})
+      `#{get} #{@path} | groff #{formatted_flags(flags)}`
+    end
+
     # Raw content of the document, without being parsed, in pure
     # groff format
     #
@@ -57,10 +75,12 @@ module GroffParser
     # @example
     #   document.raw_content
     #
+    # @param flags [Hash] hash containing flags in key-value format
+    #
     # @return [String] the document content in groff format
 
-    def raw_content
-      @raw_content ||= `#{get} #{@path}`
+    def raw_content(flags = {})
+      @raw_content ||= `#{get} #{@path} #{formatted_flags(flags)}`
     end
 
     # Content of the document in a especific format
@@ -73,10 +93,12 @@ module GroffParser
     # @param format [Symbol, String] indicates the output format, could be:
     #   dvi, html, lbp, lj4, ps, ascii, cp1047, latin1, utf8, X75, X75, X100, X100
     #
+    # @param flags [Hash] hash containing flags in key-value format
+    #
     # @return [String] the document content formated in the requested format
 
-    def formatted_content(format)
-      `#{get} #{@path} | groff -mandoc -T#{format}`
+    def formatted_content(format, flags = {})
+      `#{get} #{@path} | groff -mandoc -T#{format} #{formatted_flags(flags)}`
     end
 
     private
@@ -97,6 +119,24 @@ module GroffParser
 
     def get
       @zipped ? "zcat" : "cat"
+    end
+
+    # Helper to reduce a hash containing flags to a single line string
+    # according to the usual GNU convention
+    #
+    # @since 0.4.0
+    #
+    # @example
+    #   formatted_flags(m: :mandoc) # => "-mmandoc"
+    #
+    # @params flags [Hash] flags to be reduced
+    #
+    # @return [String] string with the parsed flags following the usual GNU convention
+
+    def formatted_flags(flags)
+      flags.reduce("") {
+        |result, flag| result.concat(" -#{flag[0]}#{flag[1]}")
+      }
     end
   end
 end
