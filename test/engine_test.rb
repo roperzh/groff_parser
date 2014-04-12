@@ -39,9 +39,11 @@ describe GroffParser::Engine do
 
   describe "#parse_all" do
     it "returns an array with all the documents contents present in the path" do
-      engine.parse_all.must_equal(
-        [GroffParser::Document.new("test/fixtures/git.1")]
-      )
+      documents = engine.parse_all
+
+      documents.length.must_equal(1)
+      documents.first.class.must_equal(GroffParser::Document)
+      documents.first.path.must_equal("test/fixtures/git.1")
     end
   end
 end
