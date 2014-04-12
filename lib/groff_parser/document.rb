@@ -75,10 +75,12 @@ module GroffParser
     # @example
     #   document.raw_content
     #
+    # @param flags [Hash] hash containing flags in key-value format
+    #
     # @return [String] the document content in groff format
 
-    def raw_content
-      @raw_content ||= `#{get} #{@path}`
+    def raw_content(flags = {})
+      @raw_content ||= `#{get} #{@path} #{formatted_flags(flags)}`
     end
 
     # Content of the document in a especific format
@@ -91,10 +93,12 @@ module GroffParser
     # @param format [Symbol, String] indicates the output format, could be:
     #   dvi, html, lbp, lj4, ps, ascii, cp1047, latin1, utf8, X75, X75, X100, X100
     #
+    # @param flags [Hash] hash containing flags in key-value format
+    #
     # @return [String] the document content formated in the requested format
 
-    def formatted_content(format)
-      `#{get} #{@path} | groff -mandoc -T#{format}`
+    def formatted_content(format, flags = {})
+      `#{get} #{@path} | groff -mandoc -T#{format} #{formatted_flags(flags)}`
     end
 
     private
