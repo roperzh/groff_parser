@@ -5,11 +5,11 @@
 [![Build Status](https://secure.travis-ci.org/roperzh/groff_parser.png?branch=master)](http://travis-ci.org/roperzh/groff_parser?branch=master)
 [![Code Climate](https://codeclimate.com/github/roperzh/groff_parser.png)](https://codeclimate.com/github/roperzh/groff_parser)
 
-Tiny library to parse groff files, with some handy metods to manage directories with a lot of files
+Tiny library to parse groff files, with some handy methods to manage directories with a lot of files
 
 ## Installation
 
-This gem relies on the [`groff`](http://savannah.gnu.org/projects/groff) GNU package, so in order to work you will need to install it.
+This gem relies on the [`groff`](http://savannah.gnu.org/projects/groff) package, so in order to work you will need to install it.
 
 ```bash
 apt-get install groff
