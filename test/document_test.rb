@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require File.expand_path(File.join("test/test_helper"))
 
 describe GroffParser::Document do
@@ -12,25 +14,42 @@ describe GroffParser::Document do
 
   let(:timestamp) { Regexp.new(/\<\!\-\- CreationDate\: (.*?) \-\-\>/) }
 
-  describe "#section" do
+  describe "#raw_section" do
     it "returns the contents of a section delimited by a given title" do
-      zipped_document.section("NAME").must_equal(
+      zipped_document.raw_section("NAME").must_equal(
         " \"\"\ngit \\- the stupid content tracker\n."
       )
 
-      unzipped_document.section("NAME").must_equal(
+      unzipped_document.raw_section("NAME").must_equal(
         " \"\"\ngit \\- the stupid content tracker\n."
       )
     end
 
     it "returns the same results whether the document is zipped or not" do
-      zipped_document.section("NAME").must_equal(
-        unzipped_document.section("NAME")
+      zipped_document.raw_section("NAME").must_equal(
+        unzipped_document.raw_section("NAME")
       )
     end
 
     it "returns nil if the provided section does not exists" do
-      zipped_document.section("UNEXISTENT_SECTION").must_equal(nil)
+      zipped_document.raw_section("UNEXISTENT_SECTION").must_equal(nil)
+    end
+  end
+
+  describe "#formatted_section" do
+    context("given a format") do
+
+      let(:format) { :utf8 }
+
+      it "returns the same results whether the document is zipped or not" do
+        zipped_document.formatted_section("NAME", format).must_equal(
+          unzipped_document.formatted_section("NAME", format)
+        )
+      end
+
+      it "returns nil if the provided section does not exists" do
+        zipped_document.formatted_section("UNEXISTENT_SECTION", format).must_equal(nil)
+      end
     end
   end
 

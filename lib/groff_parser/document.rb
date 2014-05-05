@@ -32,7 +32,7 @@ module GroffParser
     # @since 0.1.0
     #
     # @example
-    #   document.section("MY SECTION")
+    #   document.raw_section("MY SECTION")
     #   # searches for a section like this one:
     #   # .SH
     #   #  MY SECTION
@@ -41,12 +41,35 @@ module GroffParser
     # @param name [String, Symbol] name of the section
     #
     # @return [String, nil] the contents of the section or nil if the section
-    #   doesn't exist yet
+    #   doesn't exist
 
-    def section(name)
+    def raw_section(name)
       raw_section = raw_content[/SH (?:\")?#{name}(?:\")?(.*?)SH/im]
 
-      return raw_section.gsub("SH", "").gsub("#{name}", "") if raw_section
+      raw_section.gsub("SH", "").gsub("#{name}", "") if raw_section
+    end
+
+    # Currently in beta, given a section name it tries to search within the
+    # current document for a title passed as a parameter and return the contents
+    # within the title and the next one in a given format
+    #
+    # @since 0.4.0
+    #
+    # @example
+    #   document.formatted_section("MY SECTION", :utf8)
+    #   # searches for a section like this one:
+    #   # .SH
+    #   #  MY SECTION
+    #   #  ...
+    #
+    # @param name [String, Symbol] name of the section
+    #
+    # @return [String, nil] the contents of the section or nil if the section
+    #   doesn't exist
+
+    def formatted_section(name, format)
+      section = raw_section(name)
+      `echo "#{section}" | groff -mandoc -T#{format}` if section
     end
 
     # Executes the groff command, with a given set of flags, and returns the
